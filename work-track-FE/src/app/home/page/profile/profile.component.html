@@ -1,0 +1,77 @@
+<!--HEADER-->
+<div class="">
+    <nav class="flex items-center justify-between w-full bg-white text-gray-600 p-4 relative">
+        <!-- Titolo a sinistra -->
+        <a href="home-page" class="font-semibold text-xl tracking-tight">Work-Track</a>
+        
+        <!-- Logo centrato -->
+        <!-- <div class="absolute left-1/2 transform -translate-x-1/2" >
+            <img src="../../../../assets/img/logo-senza-scritta.png" alt="logo" class="w-auto h-8">
+        </div> -->
+
+        <!-- Elementi a destra -->
+        <div class="flex items-center">
+            <button (click)="goToProfile()">
+                <p class="block text-gray-600 mr-4" href="#" (click)="goToProfile()">Profilo</p>
+            </button>
+            <button (click)="goToHomePage()" >
+                <p class="block text-gray-600 mr-4" href="#" >home</p>
+            </button>
+            <a class="p-2 ml-2 transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white" (click)="logout()">Logout</a>
+        </div>
+    </nav>
+</div>
+<!--FINE HEADER -->
+<!-- Profile Card -->
+<div>
+    <div class="md:grid grid-cols-4 grid-rows-2 bg-gray-100  gap-2 p-4 rounded-xl mt-5">
+        <div class="md:col-span-1 h-48 shadow-xl">
+            <div class="flex w-full h-full relative">
+                <img src="https://res.cloudinary.com/dboafhu31/image/upload/v1625318266/imagen_2021-07-03_091743_vtbkf8.png" class="w-44 h-44 m-auto" alt="">
+            </div>
+        </div>
+        <div class="md:col-span-3 h-48 shadow-xl  space-y-2 ">
+            <div class="flex">
+                <span class="text-sm border bg-blue-50 font-bold uppercase border-2 rounded-l px-4 py-2 bg-gray-50 whitespace-no-wrap w-2/6">Nome:</span>
+                <input class="px-4 border-l-0 cursor-default border-gray-300 focus:outline-none rounded-md rounded-l-none shadow-sm -ml-1 w-4/6" type="text" [(ngModel)]="utenteDto!.nome" [readonly]="!isEditing"  [ngClass]="{'editing': isEditing}"/>
+
+            </div>
+            <div class="flex">
+                <span class="text-sm border bg-blue-50 font-bold uppercase border-2 rounded-l px-4 py-2 bg-gray-50 whitespace-no-wrap w-2/6">Cognome:</span>
+                <input class="px-4 border-l-0 cursor-default border-gray-300 focus:outline-none rounded-md rounded-l-none shadow-sm -ml-1 w-4/6" type="text" [(ngModel)]="utenteDto!.cognome" [readonly]="!isEditing"  [ngClass]="{'editing': isEditing}"/>
+            </div>
+            <div class="flex">
+                <span class="text-sm border bg-blue-50 font-bold uppercase border-2 rounded-l px-4 py-2 bg-gray-50 whitespace-no-wrap w-2/6">Email:</span>
+                <input class="px-4 border-l-0 cursor-default border-gray-300 focus:outline-none rounded-md rounded-l-none shadow-sm -ml-1 w-4/6" type="text" [(ngModel)]="utenteDto!.email" [readonly]="!isEditing"  [ngClass]="{'editing': isEditing}"/>
+            </div>
+            <div class="flex">
+                <span class="text-sm border bg-blue-50 font-bold uppercase border-2 rounded-l px-4 py-2 bg-gray-50 whitespace-no-wrap w-2/6">Password:</span>
+                <input class="px-4 border-l-0 cursor-default border-gray-300 focus:outline-none rounded-md rounded-l-none shadow-sm -ml-1 w-4/6" type="text" value="**************" [(ngModel)]="utenteDto!.password" [readonly]="!isEditing"  [ngClass]="{'editing': isEditing}"/>
+            </div>
+        </div>
+                <!-- DIV CON BOTTONI -->
+                <div class="flex flex-col sm:flex-row justify-center items-center space-x-0 sm:space-x-4 my-4 pt-10 ">
+                    <app-alert #alert></app-alert>
+                </div>
+                <div class="flex flex-col sm:flex-row justify-center items-center space-x-0 sm:space-x-4 my-4 pt-10 ">
+                    <button *ngIf="!isEditing" type="button" class="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block w-5/6 sm:w-auto px-4 mb-4 sm:mb-0" (click)="toggleEdit()">
+                        <span class="inline-block mr-2">Modifica Profilo</span>
+                    </button>
+                    <button *ngIf="isEditing" type="button" class="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block w-5/6 sm:w-auto px-4 mb-4 sm:mb-0" (click)="editProfile()">
+                        <span class="inline-block mr-2">Salva</span>
+                    </button>
+                    <button type="button" class="transition duration-200 bg-gray-500 hover:bg-gray-600 focus:bg-gray-700 focus:shadow-sm focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50 text-white py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block w-5/6 sm:w-auto px-4" (click)="goToHomePage()">
+                        <span class="inline-block mr-2">Indietro</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 inline-block">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                        </svg>
+                    </button>                
+                </div>
+    </div>
+
+</div>
+
+<footer>
+    <!-- Testo del footer -->
+    <p class="text-center py-4 bg-white">Copyright work-track Team Product By MD Berardinis </p>
+</footer>

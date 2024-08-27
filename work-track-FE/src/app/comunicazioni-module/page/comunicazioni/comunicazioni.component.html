@@ -1,0 +1,92 @@
+ <!--HEADER-->
+ <div class="">
+    <nav class="flex items-center justify-between w-full bg-white text-gray-600 p-4 relative">
+        <!-- Titolo a sinistra -->
+        <a href="home-page" class="font-semibold text-xl tracking-tight">Work-Track</a>
+        
+        <!-- Logo centrato -->
+        <!-- <div class="absolute left-1/2 transform -translate-x-1/2" >
+            <img src="../../../../assets/img/logo-senza-scritta.png" alt="logo" class="w-auto h-8">
+        </div> -->
+
+        <!-- Elementi a destra -->
+        <div class="flex items-center">
+            <button (click)="goToProfile()">
+                <p class="block text-gray-600 mr-4" href="#" (click)="goToProfile()">Profilo</p>
+            </button>
+            <button (click)="goToHomePage()" >
+                <p class="block text-gray-600 mr-4" href="#" >home</p>
+            </button>
+            <a class="p-2 ml-2 transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white" (click)="logout()">Logout</a>
+        </div>
+    </nav>
+</div>
+<!--Titolo della pagina -->
+<div class="flex justify-center items-center bg-blue-500 text-gray-700 px-6 py-4 w-full text-center mb-5">
+        <h2 class="text-2xl md:text-5xl font-medium">Comunicazioni di servizio </h2>
+</div>
+<!--bottone per creare comunicazione -->
+<button class="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none mb-5" (click)="openComunicationDiv()">Crea comunicazione</button>
+<!-- div per creare una comunicazione -->
+<div class="w-full h-full">
+<div *ngIf="newComunicationDiv">
+<div class="heading text-center font-bold text-2xl m-5 text-gray-800">Nuova comunicazione </div>
+<app-alert #alert></app-alert>
+<style>
+  body {background:white !important;}
+</style>
+  <div class="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl">
+    <input [(ngModel)]="nuovaComunicazione.titolo" class="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none" spellcheck="false" placeholder="Titolo" type="text">
+    <textarea [(ngModel)]="nuovaComunicazione.descrizione" class="description bg-gray-100 sec p-3 h-60 border border-gray-300 outline-none" spellcheck="false" placeholder="Descrizione"></textarea>
+    <!-- buttons -->
+    <div class="buttons flex">
+      <div class="btn border border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto" (click)="closeComunicationDiv()">Cancella</div>
+      <button class="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none" (click)="saveComunicazione()">Pubblica</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- card -->
+<div class="grid grid-cols-[1fr] gap-8">
+  <div *ngFor="let comunication of listOfAllComunications" class="bg-gray-100 bg-clip-border  text-gray-700 rounded-xl shadow-md max-w-[100%]">
+    <div class="p-6">
+      <h5 class="font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased mb-2">
+        {{comunication.titolo}}
+      </h5>
+      <p class="text-gray-500 overflow-hidden line-clamp-10 max-w-80 break-words md:max-w-full md:break-normal">
+        {{comunication.descrizione}}
+      </p>
+      
+    
+      <p>
+        {{comunication.data}}
+      </p>
+    </div>
+    <div class="p-6 pt-0">
+      <button
+        class="select-none rounded-lg bg-red-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        type="button"
+        data-ripple-light="true"
+        (click)="deleteComunication(comunication)"
+      >
+        Elimina
+      </button>
+    </div>
+  </div>
+
+
+</div>
+<footer>
+  <!-- Testo del footer -->
+  <p class="text-center py-4 bg-white">Copyright work-track Team Product By MD Berardinis </p>
+</footer>
+</div>
+
+
+
+
+
+
+
+

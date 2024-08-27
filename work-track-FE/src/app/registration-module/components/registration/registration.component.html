@@ -1,0 +1,46 @@
+
+<div class="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
+    <div class="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
+        <!-- Titolo con logo -->
+        <h1 class="font-bold text-center text-2xl mb-5 text-gray-600">
+        <img src="../assets/img/logo.png" alt="logo">
+        </h1>  
+        <div class="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
+        <!-- Form di login -->
+        <app-alert #alert ></app-alert>
+        <div class="px-5 py-7">
+            <label class="font-semibold text-sm text-gray-600 pb-1 block">nome</label>
+            <input [(ngModel)]="utente.nome" type="text" name="nome" placeholder="nome" class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full">
+            <label class="font-semibold text-sm text-gray-600 pb-1 block">cognome</label>
+            <input [(ngModel)]="utente.cognome" type="text" name="cognome" placeholder="cognome" class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full">
+            <label class="font-semibold text-sm text-gray-600 pb-1 block">E-mail</label>
+            <input [(ngModel)]="utente.email" type="email" name="email" placeholder="email" class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full">
+            <label class="font-semibold text-sm text-gray-600 pb-1 block">Password</label>
+            <input [(ngModel)]="utente.password" type="password" name="password" placeholder="password" class="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full">
+        </div>
+        <!-- Link per registrarsi -->
+        <div class="py-3 flex justify-between">
+            <!--bottone per tornare indietro con freccia rivolta a sinistra -->
+            <button type="button" class="transition duration-200 bg-gray-500 hover:bg-gray-600 focus:bg-gray-700 focus:shadow-sm focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50 text-white py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold inline-block w-1/3 ml-5"
+            (click)="goToLogin()">
+                <span class="inline-block mr-2">Indietro</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 inline-block">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                </svg>
+            </button>
+            <!--bottone per registrarsi -->
+            <button type="button" class="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold inline-block w-1/3 mr-5"
+            (click)="Registration()">
+                <span class="inline-block mr-2">Registrati</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 inline-block">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+            </button>
+        </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <!-- Testo del footer -->
+    <p class="text-center py-4 bg-white">Copyright work-track Team Product By MD Berardinis </p>
+</footer>

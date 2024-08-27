@@ -1,0 +1,130 @@
+ <!--HEADER-->
+ <div class="">
+    <nav class="flex items-center justify-between w-full bg-white text-gray-600 p-4 relative">
+        <!-- Titolo a sinistra -->
+        <a href="home-page" class="font-semibold text-xl tracking-tight">Work-Track</a>
+        
+        <!-- Logo centrato -->
+        <!-- <div class="absolute left-1/2 transform -translate-x-1/2" >
+            <img src="../../../../assets/img/logo-senza-scritta.png" alt="logo" class="w-auto h-8">
+        </div> -->
+
+        <!-- Elementi a destra -->
+        <div class="flex items-center">
+            <button (click)="goToProfile()">
+                <p class="block text-gray-600 mr-4" href="#" (click)="goToProfile()">Profilo</p>
+            </button>
+            <button (click)="goToHomePage()" >
+                <p class="block text-gray-600 mr-4" href="#" >home</p>
+            </button>
+            <a class="p-2 ml-2 transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white" (click)="logout()">Logout</a>
+        </div>
+    </nav>
+</div>
+
+<!--Titolo della pagina -->
+<div class="flex justify-center items-center bg-blue-500 text-gray-700 px-6 py-4 w-full text-center mb-5">
+        <h2 class="text-2xl md:text-5xl font-medium">Resoconto Mensile</h2>
+</div>
+
+<!--div solo per gli utenti non admin per cambiare data -->
+<div *ngIf="!utenteDto?.admin">
+<!-- Titolo delle select -->
+<div class="flex justify-center items-center mb-4">
+<h3 class="text-lg font-semibold">Seleziona la data interessata</h3>
+</div>
+<!-- SELCT DEI MESI e anni  -->
+<div class="flex justify-center items-center mb-4">
+<div class="mr-4">
+    <label for="selectMese" class="mr-2 font-semibold">Seleziona mese:</label>
+    <select id="selectMese" [(ngModel)]="defoultDate!.mese" class="px-3 py-2 border rounded-md">
+        <option *ngFor="let month of months" [ngValue]="month">{{ month }}</option>
+    </select>
+</div>
+
+<div>
+    <label for="selectAnno" class="mr-2 font-semibold">Seleziona anno:</label>
+    <select id="selectAnno" [(ngModel)]="defoultDate!.anno" class="px-3 py-2 border rounded-md">
+        <option *ngFor="let year of years" [ngValue]="year">{{ year }}</option>
+    </select>
+</div>
+</div>
+<!-- Bottone di aggiornamento -->
+<div class="flex justify-center items-center mb-4">
+    <button (click)="updateUserOreTot()" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-700">Aggiorna</button>
+</div>
+</div>
+
+<!-- DIV PER SCARICARE -->
+<div class="max-w-screen overflow-x-auto">
+  <!--TEBELLA INIZIO -->
+  <div class="align-middle inline-block min-w-full shadow overflow-hidden bg-gray-100 shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
+    <table id="tabella"  class="min-w-full">
+        <thead>
+            <tr>
+                <th class="px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-blue-500 tracking-wider"> Data</th>
+                <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Nome</th>
+                <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Cognome</th>
+                <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Ore diurne</th>
+                <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Ore notturne </th>
+                <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-red-600 tracking-wider">Ore di straordinari </th>
+                <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Ore totali  </th>
+                <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Ore viaggio</th>
+                <th class="px-6 py-3 border-b-2 border-gray-300"></th>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+                <tr *ngFor="let item of paginateData">
+                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                        <div class="flex items-center">
+                            <div>
+                                <div class="text-sm leading-5 text-gray-800">{{item.data}}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                        <div class="text-sm leading-5 text-blue-900">{{item.utente?.nome}}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">{{item.utente?.cognome}}</td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">{{item.ore}}</td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">{{item.oreNotturne}}</td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">{{item.straordinari}}</td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">{{item.ore! + item.oreNotturne!+ item.straordinari!}}</td>
+                    <td class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">{{item.oreViaggio}}</td> 
+            </tr>
+        </tbody>
+    </table>
+<div class="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans">
+</div>
+<div>
+</div>
+<div>
+<app-paginator 
+[totalItems]="listOfRapp.length"
+[itemsPerPage]="paginator.itemPerPage" 
+[currentPage]="paginator.pageNumber"  
+(onClick)="changePage($event)"  
+></app-paginator>
+
+</div>
+<div class="flex justify-between">
+<button *ngIf="utenteDto?.admin" type="button" class = " w-full mt-5 transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block sm:w-auto px-4 mb-4 sm:mb-0" (click)="downloadTableAsImage()">
+    <span class="inline-block mr-2">Scarica resoconto mensile PNG  </span>
+</button>
+<button *ngIf="utenteDto?.admin" type="button"class = "w-full mt-5 transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block sm:w-auto px-4 mb-4 sm:mb-0" (click)="goTolistOfUserMonitorin()">
+    <span class="inline-block mr-2">Indietro</span>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 inline-block">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+    </svg>
+</button> 
+<button *ngIf="utenteDto?.admin" type="button" class = " w-full mt-5 transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block sm:w-auto px-4 mb-4 sm:mb-0" (click)="downloadTableAsExel()">
+    <span class="inline-block mr-2">Scarica tabella in Excel </span>
+</button>   
+</div>     
+</div>
+</div>
+
+<footer>
+    <!-- Testo del footer -->
+    <p class="text-center py-4 bg-white">Copyright work-track Team Product By MD Berardinis </p>
+</footer>
