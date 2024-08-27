@@ -1,0 +1,48 @@
+package com.example.demo.repository;
+
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.example.demo.entity.RapportiniEntity;
+
+public interface RapportiniRepository extends JpaRepository<RapportiniEntity, Long> {
+
+	// Puoi definire eventuali query personalizzate qui
+	@Query("SELECT r FROM RapportiniEntity r WHERE r.utente.email = :userEmail")
+	Page<RapportiniEntity> findByUserEmail(@Param("userEmail") String userEmail, Pageable pageable);
+
+	List<RapportiniEntity> findRapportiniByUtente_Email(String email);
+
+	@Query("SELECT u, COALESCE(SUM(r.ore), 0) AS ore_totali, COALESCE(SUM(CASE WHEN r.notturno = true THEN r.ore ELSE 0 END), 0) AS ore_notturne "
+			+ "FROM UtenteEntity u " + "LEFT JOIN RapportiniEntity r ON u.id = r.utente.id "
+			+ "WHERE FUNCTION('MONTH', FUNCTION('STR_TO_DATE', r.data, '%d/%m/%Y')) = :mese "
+			+ "AND FUNCTION('YEAR', FUNCTION('STR_TO_DATE', r.data, '%d/%m/%Y')) = :anno " + "GROUP BY u.id")
+	List<Object[]> findTotalAndNightHoursByMonthAndYear(@Param("mese") int mese, @Param("anno") int anno);
+
+	@Query("SELECT r FROM RapportiniEntity r " +
+		       "WHERE FUNCTION('MONTH', FUNCTION('STR_TO_DATE', r.data, '%d/%m/%Y')) = :mese " +
+		       "AND FUNCTION('YEAR', FUNCTION('STR_TO_DATE', r.data, '%d/%m/%Y')) = :anno")
+		List<RapportiniEntity> findRapportiniByMonthAndYear(@Param("mese") int mese, @Param("anno") int anno);
+
+
+	@Query("SELECT r FROM RapportiniEntity r " +
+		       "WHERE FUNCTION('MONTH', FUNCTION('STR_TO_DATE', r.data, '%d/%m/%Y')) = :mese " +
+		       "AND FUNCTION('YEAR', FUNCTION('STR_TO_DATE', r.data, '%d/%m/%Y')) = :anno " +
+		       "AND r.utente.id = :userId")
+		List<RapportiniEntity> findRapportiniByMonthAndYearAndUserId(@Param("mese") int mese, 
+		                                                             @Param("anno") int anno,
+		                                                             @Param("userId") int userId);
+
+	@Query("SELECT r FROM RapportiniEntity r " +
+		       "WHERE LOWER(r.utente.nome) LIKE LOWER(concat('%', :searchTerm, '%')) OR " +
+		       "r.data = :searchTerm OR " +
+		       "LOWER(r.cliente) LIKE LOWER(concat('%', :searchTerm, '%'))")
+		List<RapportiniEntity> findBySearchTerm(@Param("searchTerm") String searchTerm);
+
+
+}

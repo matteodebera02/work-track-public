@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;rapportone&apos; in &apos;com.example.demo.controller.RapportiniController.save(...)&apos; to &apos;newRapportino&apos;&#x0D;&#x0A;- Original project: &apos;work-track-be&apos;&#x0D;&#x0A;- Original element: &apos;com.example.demo.controller.RapportiniController.save(RapportiniEntity).rapportone&apos;&#x0D;&#x0A;- Renamed element: &apos;rapportone&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;rapportone&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.example.demo.controller{RapportiniController.java[RapportiniController~save~QRapportiniEntity;@rapportone!1230!1269!1260!1269!QRapportiniEntity;!0!true" name="newRapportino" references="true" stamp="1712691433925" version="1.0"/>
+</session>
